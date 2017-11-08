@@ -29,13 +29,13 @@ public class TestServlet extends HttpServlet {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
-		Connection conn =	DriverManager.getConnection("jdbc:mysql://localhost:3306/web_student_tracker?useSSL=false", "webstudent", "webstudent");
+		Connection conn =	DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_tracker?useSSL=false", "employee", "employee");
 		//Variable of type Connection to hold the connection
 			
 		Statement stmt = conn.createStatement();
 		//Connection.createStatement method returns an object of type Statement which we assign to stmt 
 				
-		ResultSet myRs = stmt.executeQuery("Select * from student");
+		ResultSet myRs = stmt.executeQuery("Select * from employee");
 		
 		while(myRs.next()) {
 			String email = myRs.getString("email");
