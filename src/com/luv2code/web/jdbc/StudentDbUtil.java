@@ -243,6 +243,56 @@ public void updateStudent(Student theStudent) throws Exception {
 	finally {
 		close(myConn, myStmt, null);
 			}
-	}	
+	}
+
+
+
+public void deleteStudent(String theStudentId) throws Exception {
+	//jdbc objects
+	Connection myConn = null;
+	PreparedStatement myStmt = null;
+	int studentId;
+
+	try {
+		
+		//convert Student id to int
+		
+		studentId = Integer.parseInt(theStudentId);
+		
+		///driver details
+		Class.forName("com.mysql.jdbc.Driver");
+		
+		//get a connection
+		myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/web_student_tracker?useSSL=false", "webstudent", "webstudent");
+		
+		
+		//create sql to delete the selected student
+		
+		String sql = "delete from student where id=?";
+		
+		//create prepared statement
+		
+		myStmt = myConn.prepareStatement(sql);
+		
+		//set the parameters
+		
+		myStmt.setInt(1, studentId);
+		
+		
+		//execute the query
+		
+		myStmt.execute();		
+	
+		}
+	
+	finally {
+		//close off jdbc objects
+		close(myConn, myStmt, null);
+			}
+	
+	
+}
+
+
 }
 

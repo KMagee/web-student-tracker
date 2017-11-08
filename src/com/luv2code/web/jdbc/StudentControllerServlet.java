@@ -10,9 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class StudentControllerServlet
- */
 @WebServlet("/StudentControllerServlet")
 public class StudentControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -20,24 +17,22 @@ public class StudentControllerServlet extends HttpServlet {
 	
 	//set up ref to the db util
 	
-	private StudentDbUtil studentDbUtil;
+	private StudentDbUtil studentDbUtil = new StudentDbUtil();
 	
-	@Override
-	public void init() throws ServletException {
-		// TODO Auto-generated method stub
-		super.init();
-			
-		try {
-			
-			studentDbUtil = new StudentDbUtil();
-			
-		}
-		
-		catch(Exception exc){
-		throw new ServletException(exc);
-		}
-		
-	}
+//	@Override
+//	public void init() throws ServletException {
+//		super.init();
+//			
+//		try {
+//			
+//			
+//			
+//		}
+//		
+//		catch(Exception exc){
+//		throw new ServletException(exc);
+//		}		
+//	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -75,6 +70,11 @@ public class StudentControllerServlet extends HttpServlet {
 				updateStudent(request, response);
 				break;
 				
+			
+			case "DELETE":
+				deleteStudent(request, response);
+				break;
+				
 			default:
 				listStudents(request, response);
 			
@@ -87,6 +87,19 @@ public class StudentControllerServlet extends HttpServlet {
 		
 	}
 
+
+	private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			
+		//studentId from the delete Link
+		String theStudentId = request.getParameter("studentId");
+		
+		//delete the student from the DB
+		studentDbUtil.deleteStudent(theStudentId);
+		
+		//send the user back to the list page
+		listStudents(request,response);
+		
+	}
 
 	private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//read student info from form

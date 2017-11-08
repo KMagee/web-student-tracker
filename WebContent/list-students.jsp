@@ -47,18 +47,28 @@
 			</tr>
 		
 		<c:forEach var="tempStudent" items="${STUDENT_LIST}"> <!-- JSTL using request.getAttribute(STUDENT_LIST) -->
-	<!-- set up a link for each student in the STUDENT_LIST, add the LOAD command and the unique ID to the URL -->
-	<c:url var="tempLink" value="StudentControllerServlet">
-		<c:param name="command" value="LOAD"/>
-		<c:param name="studentId" value="${tempStudent.id}"/>
-	</c:url>
+		
+			<!-- set up an UPDATE link for each student in the STUDENT_LIST, add the LOAD command and the unique ID to the URL -->
+			<c:url var="tempLink" value="StudentControllerServlet">
+				<c:param name="command" value="LOAD"/>
+				<c:param name="studentId" value="${tempStudent.id}"/>
+			</c:url>
+			<!-- Add a link for the DELETE -->
+				<c:url var="deleteLink" value="StudentControllerServlet">
+				<c:param name="command" value="DELETE"/>
+				<c:param name="studentId" value="${tempStudent.id}"/>
+			</c:url>
+			
 	
-			<tr>
-				<td> ${tempStudent.firstName} </td> <!--JSTL using tempStudent.getFirstName() getter method  -->
-				<td> ${tempStudent.lastName}</td>
-				<td> ${tempStudent.email} </td>
-				<td><a href="${tempLink}">Update</a></td>
-			</tr>
+					<tr>
+						<td> ${tempStudent.firstName} </td> <!--JSTL using tempStudent.getFirstName() getter method  -->
+						<td> ${tempStudent.lastName}</td>
+						<td> ${tempStudent.email} </td>
+						<td><a href="${tempLink}">Update</a>
+							| 
+							<a href="${deleteLink}" onclick="if (!(confirm('Are you sure you want to delete this student?'))) return false">Delete</a>
+						</td>
+					</tr>
 		
 		</c:forEach>
 		
